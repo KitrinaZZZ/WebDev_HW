@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SoftBite Recipes</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Top Nav -->
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#" id="homeLink" aria-label="Back to home">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__name">SoftBite</span>
+      </a>
+
+      <nav class="nav" aria-label="Recipe categories">
+        <button class="nav__btn" data-target="breakfast">Breakfast</button>
+        <button class="nav__btn" data-target="lunch">Lunch</button>
+        <button class="nav__btn" data-target="dinner">Dinner</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Landing: only big mountain image -->
+    <section class="landing" id="landing" aria-label="Landing hero">
+      <div class="hero">
+        <!-- 你也可以把图片换成自己的 -->
+        <img
+          class="hero__img"
+          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2400&q=80"
+          alt="A calm mountain view"
+        />
+
+        <div class="hero__overlay" aria-hidden="true"></div>
+
+        <div class="hero__center">
+          <h1 class="hero__title">Mountain View</h1>
+          <p class="hero__subtitle">
+            low-saturation, cozy recipes for your day 
+          </p>
+          <p class="hero__hint">Choose Breakfast / Lunch / Dinner on the top.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recipe pages (hidden until click) -->
+    <section class="pages" id="pages" hidden>
+      <div class="pages__inner">
+        <button class="back" id="backBtn" type="button">← Back Home</button>
+
+        <!-- Breakfast Page -->
+        <article class="page" id="breakfast" hidden>
+          <header class="page__head">
+            <h2>Breakfast</h2>
+            <p>Soft Morning Yogurt Bowl (5 min)</p>
+          </header>
+
+          <div class="layout">
+            <section class="card" aria-labelledby="b1">
+              <h3 id="b1">Recipe</h3>
+
+              <div class="meta">
+                <div class="pill"><span>Time</span><b>5 min</b></div>
+                <div class="pill"><span>Level</span><b>Easy</b></div>
+                <div class="pill"><span>Serves</span><b>1</b></div>
+                <div class="pill"><span>Vibe</span><b>cozy</b></div>
+              </div>
+
+              <div class="grid">
+                <section class="box" aria-labelledby="b-ing">
+                  <h4 id="b-ing">Ingredients</h4>
+                  <ul>
+                    <li>Greek yogurt (or plant yogurt) — 1 cup</li>
+                    <li>Banana — 1 (sliced)</li>
+                    <li>Granola — 1/3 cup</li>
+                    <li>Honey or maple syrup — 1 tsp</li>
+                    <li>Optional: berries, cinnamon, nuts</li>
+                  </ul>
+                </section>
+
+                <section class="box" aria-labelledby="b-step">
+                  <h4 id="b-step">Steps</h4>
+                  <ol>
+                    <li>Spoon yogurt into a bowl.</li>
+                    <li>Add banana + granola on top.</li>
+                    <li>Drizzle honey/maple syrup.</li>
+                    <li>Finish with berries/cinnamon (optional).</li>
+                  </ol>
+                </section>
+              </div>
+
+              <details class="tip">
+                <summary>Little tip ✿</summary>
+                <p>Want it extra cute? Make a “smiley face” with banana + berries.</p>
+              </details>
+            </section>
+
+            <aside class="card card--side" aria-label="Breakfast notes">
+              <h3>Wireframe tags practice</h3>
+              <ul class="mini">
+                <li><code>&lt;header&gt;</code> for topbar</li>
+                <li><code>&lt;section&gt;</code> for landing/pages</li>
+                <li><code>&lt;article&gt;</code> for each recipe page</li>
+                <li><code>&lt;aside&gt;</code> for notes</li>
+              </ul>
+
+              <div class="kawaii">
+                <p class="kawaii__line">today’s mood:</p>
+                <p class="kawaii__face">( ˶ᵔ ᵕ ᵔ˶ )</p>
+              </div>
+            </aside>
+          </div>
+        </article>
+
+        <!-- Lunch Page -->
+        <article class="page" id="lunch" hidden>
+          <header class="page__head">
+            <h2>Lunch</h2>
+            <p>Gentle Salmon Rice Bowl (15 min)</p>
+          </header>
+
+          <div class="layout">
+            <section class="card">
+              <h3>Recipe</h3>
+
+              <div class="meta">
+                <div class="pill"><span>Time</span><b>15 min</b></div>
+                <div class="pill"><span>Level</span><b>Easy</b></div>
+                <div class="pill"><span>Serves</span><b>1–2</b></div>
+                <div class="pill"><span>Vibe</span><b>warm</b></div>
+              </div>
+
+              <div class="grid">
+                <section class="box">
+                  <h4>Ingredients</h4>
+                  <ul>
+                    <li>Cooked rice — 1 bowl</li>
+                    <li>Salmon — 1 fillet (or tofu)</li>
+                    <li>Avocado — 1/2</li>
+                    <li>Cucumber — a few slices</li>
+                    <li>Soy sauce + sesame oil — small splash</li>
+                    <li>Optional: sesame seeds, scallion</li>
+                  </ul>
+                </section>
+
+                <section class="box">
+                  <h4>Steps</h4>
+                  <ol>
+                    <li>Pan-sear salmon 3–4 min each side (or air-fry).</li>
+                    <li>Add rice to bowl; top with salmon + veggies.</li>
+                    <li>Mix soy sauce + sesame oil as a quick sauce.</li>
+                    <li>Sprinkle sesame seeds. Done!</li>
+                  </ol>
+                </section>
+              </div>
+
+              <p class="note">Note: tofu works great if you want vegetarian.</p>
+            </section>
+
+            <aside class="card card--side">
+              <h3>Flavor idea</h3>
+              <p>Try adding a tiny squeeze of lemon—super fresh but still soft.</p>
+            </aside>
+          </div>
+        </article>
+
+        <!-- Dinner Page -->
+        <article class="page" id="dinner" hidden>
+          <header class="page__head">
+            <h2>Dinner</h2>
+            <p>Cloudy Tomato Egg Soup (12 min)</p>
+          </header>
+
+          <div class="layout">
+            <section class="card">
+              <h3>Recipe</h3>
+
+              <div class="meta">
+                <div class="pill"><span>Time</span><b>12 min</b></div>
+                <div class="pill"><span>Level</span><b>Easy</b></div>
+                <div class="pill"><span>Serves</span><b>2</b></div>
+                <div class="pill"><span>Vibe</span><b>soft</b></div>
+              </div>
+
+              <div class="grid">
+                <section class="box">
+                  <h4>Ingredients</h4>
+                  <ul>
+                    <li>Tomatoes — 2 (chopped)</li>
+                    <li>Eggs — 2</li>
+                    <li>Water or stock — 3 cups</li>
+                    <li>Salt — to taste</li>
+                    <li>Optional: scallion, a tiny sugar</li>
+                  </ul>
+                </section>
+
+                <section class="box">
+                  <h4>Steps</h4>
+                  <ol>
+                    <li>Simmer tomatoes in water/stock 5–6 min.</li>
+                    <li>Beat eggs; slowly pour while stirring to form ribbons.</li>
+                    <li>Season with salt (tiny sugar optional).</li>
+                    <li>Top with scallion. Cozy dinner ready.</li>
+                  </ol>
+                </section>
+              </div>
+
+              <details class="tip">
+                <summary>Little tip ✿</summary>
+                <p>If you want it thicker, add a tiny cornstarch slurry.</p>
+              </details>
+            </section>
+
+            <aside class="card card--side">
+              <h3>Why this fits “cute low-sat”</h3>
+              <p>Soft colors + round shapes + gentle shadows = cozy feeling.</p>
+            </aside>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Made with low-saturation vibes ✿</p>
+  </footer>
+
+  <script>
+    const landing = document.getElementById("landing");
+    const pages = document.getElementById("pages");
+    const backBtn = document.getElementById("backBtn");
+    const homeLink = document.getElementById("homeLink");
+    const buttons = document.querySelectorAll(".nav__btn");
+    const allPages = document.querySelectorAll(".page");
+
+    function showLanding(){
+      pages.hidden = true;
+      landing.hidden = false;
+      allPages.forEach(p => p.hidden = true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showPage(id){
+      landing.hidden = true;
+      pages.hidden = false;
+      allPages.forEach(p => p.hidden = (p.id !== id));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => showPage(btn.dataset.target));
+    });
+
+    backBtn.addEventListener("click", showLanding);
+    homeLink.addEventListener("click", (e) => { e.preventDefault(); showLanding(); });
+  </script>
+</body>
+</html>

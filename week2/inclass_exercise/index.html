@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>换皮肤 Demo</title>
+
+    <!-- 这行是关键：我们会用 JS 切换它的 href -->
+    <link id="theme" rel="stylesheet" href="light.css" />
+  </head>
+
+  <body>
+    <header class="card">
+      <h1>我的小网页（Same HTML）</h1>
+      <p>下面内容完全不变，我只换 CSS，就会“换皮肤”。</p>
+      <button id="toggle">切换皮肤</button>
+    </header>
+
+    <main class="grid">
+      <section class="card">
+        <h2>栏目 A</h2>
+        <p>这里是一段文字：今天我学会了 HTML 和 CSS 的区别。</p>
+        <a href="#">这是一个链接</a>
+      </section>
+
+      <section class="card">
+        <h2>栏目 B</h2>
+        <ul>
+          <li>同一份 HTML</li>
+          <li>不同的 CSS</li>
+          <li>视觉完全变了</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>栏目 C</h2>
+        <p class="tag">New</p>
+        <p>CSS 可以控制颜色、字体、间距、阴影、排版。</p>
+      </section>
+    </main>
+
+    <script>
+      const themeLink = document.getElementById("theme");
+      const btn = document.getElementById("toggle");
+
+      btn.addEventListener("click", () => {
+        themeLink.href = themeLink.href.includes("light.css")
+          ? "dark.css"
+          : "light.css";
+      });
+    </script>
+  </body>
+</html>
