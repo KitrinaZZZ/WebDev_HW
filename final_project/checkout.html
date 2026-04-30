@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Bites Club — Checkout</title>
+    <link rel="stylesheet" href="checkout.css" />
+  </head>
+
+  <body>
+    <div class="checkout-shell">
+      <header class="checkout-header">
+        <div>
+          <h1>Tiny Bites Club</h1>
+          <p>simulated checkout</p>
+        </div>
+
+        <a href="cart.html">Back to cart</a>
+      </header>
+
+      <main class="checkout-layout">
+        <section class="checkout-form-card">
+          <h2>Shipping address</h2>
+
+          <form id="checkoutForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" required />
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Street address</label>
+              <input type="text" id="address" placeholder="99 Fleet Place" required />
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" required />
+              </div>
+
+              <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" required />
+              </div>
+
+              <div class="form-group">
+                <label for="zip">ZIP code</label>
+                <input type="text" id="zip" required />
+              </div>
+            </div>
+
+            <h2>Payment</h2>
+
+            <div class="form-group">
+              <label for="cardName">Name on card</label>
+              <input type="text" id="cardName" required />
+            </div>
+
+            <div class="form-group">
+              <label for="cardNumber">Card number</label>
+              <input
+                type="text"
+                id="cardNumber"
+                placeholder="1234 5678 9012 3456"
+                maxlength="19"
+                required
+              />
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="expiry">Expiration date</label>
+                <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required />
+              </div>
+
+              <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" placeholder="123" maxlength="4" required />
+              </div>
+            </div>
+
+            <button type="submit" class="place-order-button">
+              Place order
+            </button>
+          </form>
+        </section>
+
+        <aside class="order-summary">
+          <p class="summary-label">Order Summary</p>
+          <div id="summaryItems"></div>
+
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <strong id="subtotal">$0.00</strong>
+          </div>
+
+          <div class="summary-line">
+            <span>Shipping</span>
+            <strong>$0.00</strong>
+          </div>
+
+          <div class="summary-total">
+            <span>Total</span>
+            <strong id="total">$0.00</strong>
+          </div>
+
+          <p class="checkout-note">
+            This is a class project checkout. No real payment will be processed.
+          </p>
+        </aside>
+      </main>
+    </div>
+
+    <script>
+      const summaryItems = document.getElementById("summaryItems");
+      const subtotalElement = document.getElementById("subtotal");
+      const totalElement = document.getElementById("total");
+      const checkoutForm = document.getElementById("checkoutForm");
+
+      function getCart() {
+        return JSON.parse(localStorage.getItem("tinyBitesCart")) || [];
+      }
+
+      function priceToNumber(priceString) {
+        return Number(priceString.replace("$", ""));
+      }
+
+      function calculateSubtotal(cart) {
+        return cart.reduce(function (total, item) {
+          return total + priceToNumber(item.price) * item.quantity;
+        }, 0);
+      }
+
+      function renderSummary() {
+        const cart = getCart();
+
+        if (cart.length === 0) {
+          summaryItems.innerHTML = `
+            <p class="empty-message">Your cart is empty.</p>
+          `;
+          subtotalElement.textContent = "$0.00";
+          totalElement.textContent = "$0.00";
+          return;
+        }
+
+        summaryItems.innerHTML = "";
+
+        cart.forEach(function (item) {
+          const itemRow = document.createElement("div");
+          itemRow.className = "summary-item";
+
+          itemRow.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" />
+            <div>
+              <h3>${item.name}</h3>
+              <p>Qty: ${item.quantity}</p>
+            </div>
+            <strong>${item.price}</strong>
+          `;
+
+          summaryItems.appendChild(itemRow);
+        });
+
+        const subtotal = calculateSubtotal(cart).toFixed(2);
+
+        subtotalElement.textContent = "$" + subtotal;
+        totalElement.textContent = "$" + subtotal;
+      }
+
+      checkoutForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const orderInfo = {
+          firstName: document.getElementById("firstName").value,
+          lastName: document.getElementById("lastName").value,
+          address: document.getElementById("address").value,
+          city: document.getElementById("city").value,
+          state: document.getElementById("state").value,
+          zip: document.getElementById("zip").value,
+          total: totalElement.textContent
+        };
+
+        localStorage.setItem("tinyBitesLastOrder", JSON.stringify(orderInfo));
+        localStorage.removeItem("tinyBitesCart");
+
+        alert("Order placed! This is a simulated checkout.");
+        window.location.href = "confirmation.html";
+      });
+
+      renderSummary();
+    </script>
+  </body>
+</html>

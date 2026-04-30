@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Bites Club — Sign Up</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="brand">
+          <div class="brand-badge">🍓</div>
+          <div>
+            <h1>Tiny Bites Club</h1>
+            <p>recipes that promise just a little improvement</p>
+          </div>
+        </div>
+
+        <nav class="top-nav">
+          <a href="home.html">home</a>
+          <a href="#">recipes</a>
+          <a href="#">notes</a>
+          <a href="login.html">login</a>
+        </nav>
+      </header>
+
+      <main class="hero-grid">
+        <section class="hero-copy">
+          <p class="eyebrow">welcome to the club</p>
+          <h2>A soft little place for “light” meals, sweet routines, and tiny goals.</h2>
+          <p class="intro">
+            Sign up to save breakfast, lunch, and dinner ideas.
+          </p>
+        </section>
+
+        <section class="signup-panel">
+          <div class="signup-card">
+            <p class="card-label">new member</p>
+            <h3>Create your account</h3>
+
+            <form class="signup-form" id="signupForm">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="tinybiteslover"
+                required
+              />
+
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="hello@example.com"
+                required
+              />
+
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                required
+              />
+
+              <label for="favorite">Favorite meal time</label>
+              <select id="favorite" name="favorite" required>
+                <option value="">Choose one</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="dessert">Dessert</option>
+              </select>
+
+              <label for="note">Little note</label>
+              <textarea
+                id="note"
+                name="note"
+                rows="4"
+                placeholder="What kind of recipes are you looking for?"
+              ></textarea>
+
+              <button type="submit">Join the club</button>
+            </form>
+
+            <p class="form-note">
+              Already have an account? <a href="login.html">Log in here</a>.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>tiny bites, softer thoughts, prettier screens.</p>
+      </footer>
+    </div>
+
+    <script>
+      const signupForm = document.getElementById("signupForm");
+
+      signupForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const password = document.getElementById("password").value;
+        const favorite = document.getElementById("favorite").value;
+        const note = document.getElementById("note").value.trim();
+
+        let users = JSON.parse(localStorage.getItem("tinyBitesUsers")) || [];
+
+        const existingUser = users.find(function (user) {
+          return user.email === email;
+        });
+
+        if (existingUser) {
+          alert("This email is already signed up. Please log in instead.");
+          window.location.href = "login.html";
+          return;
+        }
+
+        const newUser = {
+          username: username,
+          email: email,
+          password: password,
+          favorite: favorite,
+          note: note
+        };
+
+        users.push(newUser);
+        localStorage.setItem("tinyBitesUsers", JSON.stringify(users));
+        localStorage.setItem("currentUser", JSON.stringify(newUser));
+
+        alert("Sign up successful!");
+        window.location.href = "home.html";
+      });
+    </script>
+  </body>
+</html>

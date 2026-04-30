@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Bites Club — Favorites</title>
+    <link rel="stylesheet" href="favorite.css" />
+  </head>
+
+  <body>
+    <div class="favorites-shell">
+      <header class="favorites-header">
+        <div class="brand">
+          <div class="brand-badge">🍓</div>
+          <div>
+            <h1>Tiny Bites Club</h1>
+            <p>your saved tiny bites</p>
+          </div>
+        </div>
+
+        <nav class="favorites-nav">
+          <a href="home.html">Home</a>
+          <a href="cart.html">Cart</a>
+        </nav>
+      </header>
+
+      <section class="favorites-hero">
+        <p class="small-label">favorites</p>
+        <h2>Your saved items</h2>
+        <p>These are the products you saved with the little heart button.</p>
+      </section>
+
+      <main>
+        <div class="favorites-grid" id="favoritesGrid"></div>
+
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <h3>No favorites yet.</h3>
+          <p>Go back to the shop and tap the heart on a product you like.</p>
+          <a href="home.html">Browse products</a>
+        </div>
+      </main>
+    </div>
+
+    <script src="product-data.js"></script>
+
+    <script>
+      const favoritesGrid = document.getElementById("favoritesGrid");
+      const emptyState = document.getElementById("emptyState");
+
+      function getFavorites() {
+        return JSON.parse(localStorage.getItem("tinyBitesFavorites")) || [];
+      }
+
+      function saveFavorites(favorites) {
+        localStorage.setItem("tinyBitesFavorites", JSON.stringify(favorites));
+      }
+
+      function removeFavorite(productId) {
+        const updatedFavorites = getFavorites().filter(function (id) {
+          return id !== productId;
+        });
+
+        saveFavorites(updatedFavorites);
+        renderFavorites();
+      }
+
+      function renderFavorites() {
+        const favoriteIds = getFavorites();
+        favoritesGrid.innerHTML = "";
+
+        if (favoriteIds.length === 0) {
+          emptyState.style.display = "block";
+          return;
+        }
+
+        emptyState.style.display = "none";
+
+        favoriteIds.forEach(function (id) {
+          const product = products[id];
+
+          if (!product) return;
+
+          const card = document.createElement("article");
+          card.className = "favorite-card";
+
+          card.innerHTML = `
+            <img class="favorite-image" src="${product.image}" alt="${product.name}" />
+
+            <div class="favorite-body">
+              <p class="small-label">${product.category}</p>
+              <h3>${product.name}</h3>
+              <p>${product.description}</p>
+              <div class="favorite-price">${product.price}</div>
+
+              <div class="favorite-actions">
+                <a href="product.html?id=${id}">View product</a>
+                <button type="button" data-id="${id}">Remove</button>
+              </div>
+            </div>
+          `;
+
+          favoritesGrid.appendChild(card);
+        });
+
+        const removeButtons = document.querySelectorAll(".favorite-actions button");
+
+        removeButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            const productId = button.getAttribute("data-id");
+            removeFavorite(productId);
+          });
+        });
+      }
+
+      renderFavorites();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Bites Club — Cart</title>
+    <link rel="stylesheet" href="cart.css" />
+  </head>
+
+  <body>
+    <div class="cart-shell">
+      <header class="cart-header">
+        <div class="brand">
+          <div class="brand-badge">🍓</div>
+          <div>
+            <h1>Tiny Bites Club</h1>
+            <p>your tiny shopping basket</p>
+          </div>
+        </div>
+
+        <nav class="cart-nav">
+          <a href="home.html">Home</a>
+          <a href="favorites.html">Favorites</a>
+          <a href="checkout.html">Checkout</a>
+        </nav>
+      </header>
+
+      <main class="cart-layout">
+        <section class="cart-main">
+          <div class="cart-title-row">
+            <h2>Shopping Cart</h2>
+            <p>Price</p>
+          </div>
+
+          <div id="cartItems"></div>
+
+          <div class="cart-subtotal-line">
+            <p id="cartSubtotalBottom">Subtotal: $0.00</p>
+          </div>
+        </section>
+
+        <aside class="cart-summary">
+          <p class="summary-label">Order Summary</p>
+          <h3 id="summarySubtotal">Subtotal: $0.00</h3>
+          <p class="summary-note">
+            This is a simulated checkout. No real payment will be processed.
+          </p>
+
+          <a class="checkout-button" id="checkoutButton" href="checkout.html">
+            Proceed to checkout
+          </a>
+
+          <a class="continue-link" href="home.html">Continue shopping</a>
+        </aside>
+      </main>
+    </div>
+
+    <script>
+      const cartItemsContainer = document.getElementById("cartItems");
+      const summarySubtotal = document.getElementById("summarySubtotal");
+      const cartSubtotalBottom = document.getElementById("cartSubtotalBottom");
+      const checkoutButton = document.getElementById("checkoutButton");
+
+      function getCart() {
+        return JSON.parse(localStorage.getItem("tinyBitesCart")) || [];
+      }
+
+      function saveCart(cart) {
+        localStorage.setItem("tinyBitesCart", JSON.stringify(cart));
+      }
+
+      function priceToNumber(priceString) {
+        return Number(priceString.replace("$", ""));
+      }
+
+      function calculateSubtotal(cart) {
+        return cart.reduce(function (total, item) {
+          return total + priceToNumber(item.price) * item.quantity;
+        }, 0);
+      }
+
+      function renderCart() {
+        const cart = getCart();
+        cartItemsContainer.innerHTML = "";
+
+        if (cart.length === 0) {
+          cartItemsContainer.innerHTML = `
+            <div class="empty-cart">
+              <h3>Your cart is empty.</h3>
+              <p>Add something soft, tiny, and sweet to your cart.</p>
+              <a href="home.html">Go back to shop</a>
+            </div>
+          `;
+
+          summarySubtotal.textContent = "Subtotal: $0.00";
+          cartSubtotalBottom.textContent = "Subtotal: $0.00";
+          checkoutButton.classList.add("disabled");
+          checkoutButton.addEventListener("click", function (event) {
+            event.preventDefault();
+          });
+
+          return;
+        }
+
+        checkoutButton.classList.remove("disabled");
+
+        cart.forEach(function (item) {
+          const cartItem = document.createElement("article");
+          cartItem.className = "cart-item";
+
+          cartItem.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image" />
+
+            <div class="cart-item-info">
+              <h3>${item.name}</h3>
+              <p class="stock-text">In Stock</p>
+              <p class="small-note">Tiny Bites Club recommended item</p>
+
+              <div class="cart-actions">
+                <label>
+                  Qty:
+                  <select data-id="${item.id}" class="quantity-select">
+                    <option value="1" ${item.quantity === 1 ? "selected" : ""}>1</option>
+                    <option value="2" ${item.quantity === 2 ? "selected" : ""}>2</option>
+                    <option value="3" ${item.quantity === 3 ? "selected" : ""}>3</option>
+                    <option value="4" ${item.quantity === 4 ? "selected" : ""}>4</option>
+                    <option value="5" ${item.quantity === 5 ? "selected" : ""}>5</option>
+                  </select>
+                </label>
+
+                <button class="delete-button" data-id="${item.id}">
+                  Delete
+                </button>
+
+                <a href="product.html?id=${item.id}">View details</a>
+              </div>
+            </div>
+
+            <div class="cart-item-price">
+              ${item.price}
+            </div>
+          `;
+
+          cartItemsContainer.appendChild(cartItem);
+        });
+
+        const subtotal = calculateSubtotal(cart).toFixed(2);
+        summarySubtotal.textContent = "Subtotal: $" + subtotal;
+        cartSubtotalBottom.textContent = "Subtotal: $" + subtotal;
+
+        addCartEvents();
+      }
+
+      function addCartEvents() {
+        const quantitySelects = document.querySelectorAll(".quantity-select");
+        const deleteButtons = document.querySelectorAll(".delete-button");
+
+        quantitySelects.forEach(function (select) {
+          select.addEventListener("change", function () {
+            const productId = select.getAttribute("data-id");
+            const newQuantity = Number(select.value);
+            const cart = getCart();
+
+            const item = cart.find(function (cartItem) {
+              return cartItem.id === productId;
+            });
+
+            if (item) {
+              item.quantity = newQuantity;
+            }
+
+            saveCart(cart);
+            renderCart();
+          });
+        });
+
+        deleteButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            const productId = button.getAttribute("data-id");
+
+            const newCart = getCart().filter(function (item) {
+              return item.id !== productId;
+            });
+
+            saveCart(newCart);
+            renderCart();
+          });
+        });
+      }
+
+      renderCart();
+    </script>
+  </body>
+</html>

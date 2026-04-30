@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Bites Club — Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="brand">
+          <div class="brand-badge">🍓</div>
+          <div>
+            <h1>Tiny Bites Club</h1>
+            <p>recipes that promise just a little improvement</p>
+          </div>
+        </div>
+
+        <nav class="top-nav">
+          <a href="home.html">home</a>
+          <a href="#">recipes</a>
+          <a href="#">notes</a>
+          <a href="index.html">sign up</a>
+        </nav>
+      </header>
+
+      <main class="hero-grid">
+        <section class="hero-copy">
+          <p class="eyebrow">welcome back</p>
+          <h2>Return to your tiny recipe world.</h2>
+          <p class="intro">
+            Log in with the email and password you used to join Tiny Bites Club.
+          </p>
+        </section>
+
+        <section class="signup-panel">
+          <div class="signup-card">
+            <p class="card-label">member login</p>
+            <h3>Log in</h3>
+
+            <form class="signup-form" id="loginForm">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="hello@example.com"
+                required
+              />
+
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                required
+              />
+
+              <button type="submit">Log in</button>
+            </form>
+
+            <p class="form-note">
+              New here? <a href="index.html">Create an account</a>.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>tiny bites, softer thoughts, prettier screens.</p>
+      </footer>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById("loginForm");
+
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const password = document.getElementById("password").value;
+
+        const users = JSON.parse(localStorage.getItem("tinyBitesUsers")) || [];
+
+        const matchedUser = users.find(function (user) {
+          return user.email === email && user.password === password;
+        });
+
+        if (matchedUser) {
+          localStorage.setItem("currentUser", JSON.stringify(matchedUser));
+          alert("Login successful!");
+          window.location.href = "home.html";
+        } else {
+          alert("Email or password is incorrect.");
+        }
+      });
+    </script>
+  </body>
+</html>

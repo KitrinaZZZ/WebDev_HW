@@ -1,0 +1,238 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    background: #fff8f3;
+    color: #4a332f;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .checkout-shell {
+    width: min(1180px, 94%);
+    margin: 0 auto;
+    padding: 28px 0 56px;
+  }
+  
+  .checkout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 34px;
+  }
+  
+  .checkout-header h1 {
+    margin: 0;
+    font-size: 1.9rem;
+  }
+  
+  .checkout-header p {
+    margin: 4px 0 0;
+    color: #8a6b64;
+  }
+  
+  .checkout-header a {
+    background: #ffffff;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid #f0cfd8;
+    color: #8a4f5d;
+    font-weight: bold;
+  }
+  
+  .checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 28px;
+    align-items: start;
+  }
+  
+  .checkout-form-card,
+  .order-summary {
+    background: #ffffff;
+    border: 1px solid #f1d7d0;
+    border-radius: 28px;
+    box-shadow: 0 14px 34px rgba(158, 111, 92, 0.1);
+  }
+  
+  .checkout-form-card {
+    padding: 30px;
+  }
+  
+  .checkout-form-card h2 {
+    margin: 0 0 20px;
+    font-size: 1.7rem;
+  }
+  
+  .checkout-form-card h2:not(:first-child) {
+    margin-top: 34px;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  
+  .form-grid .form-group:nth-child(3) {
+    grid-column: span 2;
+  }
+  
+  .form-group {
+    margin-bottom: 18px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #735750;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: 100%;
+    border: 1px solid #f0cfd8;
+    border-radius: 16px;
+    padding: 13px 14px;
+    font-family: inherit;
+    font-size: 1rem;
+    background: #fffdfb;
+    color: #4a332f;
+    outline: none;
+  }
+  
+  .form-group input:focus {
+    border-color: #d98295;
+    box-shadow: 0 0 0 4px rgba(217, 130, 149, 0.12);
+  }
+  
+  .place-order-button {
+    width: 100%;
+    margin-top: 12px;
+    border: none;
+    border-radius: 999px;
+    padding: 15px 18px;
+    background: #ffd96a;
+    border: 1px solid #e9bd42;
+    color: #4a332f;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .place-order-button:hover {
+    background: #ffc940;
+  }
+  
+  .order-summary {
+    padding: 24px;
+    position: sticky;
+    top: 24px;
+  }
+  
+  .summary-label {
+    margin: 0 0 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #b86c7c;
+    font-size: 0.78rem;
+    font-weight: bold;
+  }
+  
+  .summary-item {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    border-bottom: 1px solid #f1d7d0;
+    padding: 14px 0;
+  }
+  
+  .summary-item img {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: #ffe8ef;
+  }
+  
+  .summary-item h3 {
+    margin: 0;
+    font-size: 0.98rem;
+  }
+  
+  .summary-item p {
+    margin: 4px 0 0;
+    color: #8a6b64;
+    font-size: 0.9rem;
+  }
+  
+  .summary-item strong {
+    color: #9b5968;
+    font-size: 0.95rem;
+  }
+  
+  .summary-line,
+  .summary-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  
+  .summary-line {
+    padding: 14px 0;
+    color: #735750;
+  }
+  
+  .summary-total {
+    border-top: 1px solid #f1d7d0;
+    padding-top: 16px;
+    margin-top: 8px;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .checkout-note,
+  .empty-message {
+    margin-top: 18px;
+    color: #8a6b64;
+    line-height: 1.5;
+    font-size: 0.95rem;
+  }
+  
+  @media (max-width: 900px) {
+    .checkout-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+  
+    .checkout-layout {
+      grid-template-columns: 1fr;
+    }
+  
+    .order-summary {
+      position: static;
+    }
+  }
+  
+  @media (max-width: 620px) {
+    .checkout-form-card {
+      padding: 22px;
+    }
+  
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .form-grid .form-group:nth-child(3) {
+      grid-column: span 1;
+    }
+  }

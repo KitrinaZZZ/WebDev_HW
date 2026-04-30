@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Bites Club — Home</title>
+    <link rel="stylesheet" href="home.css" />
+  </head>
+
+  <body>
+    <div class="home-shell">
+      <header class="home-header">
+        <div class="logo-area">
+          <div class="logo-box">🍓</div>
+          <div>
+            <h1>Tiny Bites Club</h1>
+            <p>light recipes and softer routines</p>
+          </div>
+        </div>
+
+        <nav class="home-nav">
+          <a href="index.html">sign up</a>
+          <a href="login.html">login</a>
+          <a href="favorites.html">favorites</a>
+          <a href="about.html">about</a>
+        </nav>
+      </header>
+
+      <section class="hero-banner">
+        <div class="hero-text">
+          <p class="small-label">today’s menu</p>
+          <h2 id="mealSlogan">Pick a category and start with something gentle.</h2>
+          <p id="welcomeUser">
+            Browse breakfast, lunch, and dinner recipes in a soft and playful space.
+          </p>
+        </div>
+        <div class="hero-sticker" id="mealSticker">milk tea mood ☁️</div>
+      </section>
+
+      <section class="search-filter-section">
+        <div class="section-head">
+          <div>
+            <p class="small-label">explore</p>
+            <h2>Find your tiny bite</h2>
+          </div>
+        </div>
+
+        <div class="search-controls">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search recipes or products..."
+          />
+
+          <select id="categoryFilter">
+            <option value="all">All categories</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="dessert">Dessert</option>
+          </select>
+        </div>
+      </section>
+
+      <main class="category-grid">
+        <article class="category-card breakfast-card" data-category-button="breakfast">
+          <div class="card-top">
+            <span class="emoji">🥞</span>
+            <p class="category-type">Breakfast</p>
+          </div>
+          <h3>Soft starts</h3>
+          <p>Pretty toast, yogurt bowls, fruit sandwiches, and gentle morning plates.</p>
+          <a href="breakfast.html">See recipes</a>
+        </article>
+
+        <article class="category-card lunch-card" data-category-button="lunch">
+          <div class="card-top">
+            <span class="emoji">🥗</span>
+            <p class="category-type">Lunch</p>
+          </div>
+          <h3>Little reset meals</h3>
+          <p>Easy rice bowls, light noodles, simple salads, and cute lunchbox ideas.</p>
+          <a href="lunch.html">See recipes</a>
+        </article>
+
+        <article class="category-card dinner-card" data-category-button="dinner">
+          <div class="card-top">
+            <span class="emoji">🍵</span>
+            <p class="category-type">Dinner</p>
+          </div>
+          <h3>Quiet evening food</h3>
+          <p>Warm soups, one-pan dinners, soft textures, and comfort without pressure.</p>
+          <a href="dinner.html">See recipes</a>
+        </article>
+      </main>
+
+      <section class="shop-section">
+        <div class="section-head">
+          <div>
+            <p class="small-label">shop</p>
+            <h2>Popular products</h2>
+          </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+
+        <p id="emptyMessage" style="display: none;">
+          No tiny bites found. Try another search.
+        </p>
+      </section>
+
+      <footer class="home-footer">
+        <p>tiny bites club — a sweet and careful recipe world</p>
+      </footer>
+    </div>
+
+    <script>
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+      const mealSlogan = document.getElementById("mealSlogan");
+      const welcomeUser = document.getElementById("welcomeUser");
+      const mealSticker = document.getElementById("mealSticker");
+
+      if (currentUser) {
+        welcomeUser.textContent = "Welcome back, " + currentUser.username + ".";
+
+        if (currentUser.favorite === "breakfast") {
+          mealSlogan.textContent = "Breakfast is your soft beginning.";
+          mealSticker.textContent = "pancake morning 🥞";
+        } else if (currentUser.favorite === "lunch") {
+          mealSlogan.textContent = "Lunch is your little reset.";
+          mealSticker.textContent = "fresh lunch mood 🥗";
+        } else if (currentUser.favorite === "dinner") {
+          mealSlogan.textContent = "Dinner is your quiet comfort.";
+          mealSticker.textContent = "cozy dinner hour 🍵";
+        } else if (currentUser.favorite === "dessert") {
+          mealSlogan.textContent = "Dessert is your tiny celebration.";
+          mealSticker.textContent = "sweet little treat 🍰";
+        }
+      }
+
+      const products = [
+        {
+          id: "glass-bowl-set",
+          name: "Glass Bowl Set",
+          category: "breakfast",
+          price: "$18.00",
+          image: "images/glass-bowl.jpg",
+          description:
+            "A clear little bowl set for yogurt, fruit, and soft breakfast plates.",
+          tags: ["bowl", "yogurt", "fruit", "breakfast"]
+        },
+        {
+          id: "rice-cooker",
+          name: "Mini Rice Cooker",
+          category: "lunch",
+          price: "$42.00",
+          image: "images/rice-cooker.jpg",
+          description:
+            "A small rice cooker for one-person meals, soft rice, and cozy routines.",
+          tags: ["rice", "lunch", "warm", "simple"]
+        },
+        {
+          id: "jam",
+          name: "Low Sugar Jam",
+          category: "breakfast",
+          price: "$7.50",
+          image: "images/jam.jpg",
+          description:
+            "A soft fruit jam for toast, yogurt bowls, and sweet little breakfast plates.",
+          tags: ["jam", "toast", "fruit", "sweet"]
+        },
+        {
+          id: "matcha",
+          name: "Matcha Powder",
+          category: "dessert",
+          price: "$14.00",
+          image: "images/matcha.jpg",
+          description:
+            "A gentle matcha powder for drinks, oats, desserts, and green-toned recipes.",
+          tags: ["matcha", "drink", "dessert", "green"]
+        },
+        {
+          id: "soup-cup",
+          name: "Soft Soup Cup",
+          category: "dinner",
+          price: "$16.00",
+          image: "images/soup-cup.jpg",
+          description:
+            "A warm little cup for soups, noodles, and quiet evening meals.",
+          tags: ["soup", "dinner", "warm", "comfort"]
+        },
+        {
+          id: "lunch-box",
+          name: "Cute Lunch Box",
+          category: "lunch",
+          price: "$20.00",
+          image: "images/lunch-box.jpg",
+          description:
+            "A small lunch box for rice bowls, salads, and tiny organized meals.",
+          tags: ["lunch", "box", "salad", "rice"]
+        },
+        {
+          id: "ceramic-plate",
+          name: "Soft Ceramic Plate",
+          category: "breakfast",
+          price: "$22.00",
+          image: "images/plate.jpg",
+          description:
+            "A soft-toned ceramic plate for toast, eggs, and pretty morning setups.",
+          tags: ["plate", "breakfast", "toast", "soft"]
+        },
+        {
+          id: "tea-set",
+          name: "Mini Tea Set",
+          category: "dinner",
+          price: "$26.00",
+          image: "images/tea-set.jpg",
+          description:
+            "A small tea set for quiet evenings, warm drinks, and slow routines.",
+          tags: ["tea", "drink", "calm", "evening"]
+        }
+      ];
+
+      const productsGrid = document.getElementById("productsGrid");
+      const searchInput = document.getElementById("searchInput");
+      const categoryFilter = document.getElementById("categoryFilter");
+      const emptyMessage = document.getElementById("emptyMessage");
+
+      function displayProducts(productList) {
+        productsGrid.innerHTML = "";
+
+        if (productList.length === 0) {
+          emptyMessage.style.display = "block";
+          return;
+        }
+
+        emptyMessage.style.display = "none";
+
+        productList.forEach(function (product) {
+          const productCard = document.createElement("article");
+          productCard.className = "product-card";
+
+          productCard.innerHTML = `
+            <img
+              class="product-image"
+              src="${product.image}"
+              alt="${product.name}"
+            />
+
+            <div class="product-body">
+              <p class="small-label">${product.category}</p>
+              <h3>${product.name}</h3>
+              <p>${product.description}</p>
+              <div class="product-price">${product.price}</div>
+
+              <a class="product-link" href="product.html?id=${product.id}">
+                View product
+              </a>
+            </div>
+          `;
+
+          productsGrid.appendChild(productCard);
+        });
+      }
+
+      function filterProducts() {
+        const searchText = searchInput.value.toLowerCase();
+        const selectedCategory = categoryFilter.value;
+
+        const filteredProducts = products.filter(function (product) {
+          const matchesSearch =
+            product.name.toLowerCase().includes(searchText) ||
+            product.description.toLowerCase().includes(searchText) ||
+            product.tags.join(" ").toLowerCase().includes(searchText);
+
+          const matchesCategory =
+            selectedCategory === "all" || product.category === selectedCategory;
+
+          return matchesSearch && matchesCategory;
+        });
+
+        displayProducts(filteredProducts);
+      }
+
+      searchInput.addEventListener("input", filterProducts);
+      categoryFilter.addEventListener("change", filterProducts);
+
+      const categoryCards = document.querySelectorAll("[data-category-button]");
+
+      categoryCards.forEach(function (card) {
+        card.addEventListener("click", function () {
+          const category = card.getAttribute("data-category-button");
+          categoryFilter.value = category;
+          filterProducts();
+        });
+      });
+
+      displayProducts(products);
+    </script>
+  </body>
+</html>
