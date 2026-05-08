@@ -27,16 +27,20 @@
       <section class="favorites-hero">
         <p class="small-label">favorites</p>
         <h2>Your saved items</h2>
-        <p>These are the products you saved with the little heart button.</p>
+        <p>These are the recipes and products you saved with the little heart button.</p>
       </section>
 
       <main>
-        <div class="favorites-grid" id="favoritesGrid"></div>
+        <h2 class="section-title">Saved Recipes</h2>
+        <div class="favorites-grid" id="recipeFavoritesGrid"></div>
+
+        <h2 class="section-title">Saved Products</h2>
+        <div class="favorites-grid" id="productFavoritesGrid"></div>
 
         <div class="empty-state" id="emptyState" style="display: none;">
           <h3>No favorites yet.</h3>
-          <p>Go back to the shop and tap the heart on a product you like.</p>
-          <a href="home.html">Browse products</a>
+          <p>Go back and tap the heart on a recipe or product you like.</p>
+          <a href="home.html">Browse items</a>
         </div>
       </main>
     </div>
@@ -44,38 +48,198 @@
     <script src="product-data.js"></script>
 
     <script>
-      const favoritesGrid = document.getElementById("favoritesGrid");
+      const recipeFavoritesGrid = document.getElementById("recipeFavoritesGrid");
+      const productFavoritesGrid = document.getElementById("productFavoritesGrid");
       const emptyState = document.getElementById("emptyState");
 
-      function getFavorites() {
+      const recipes = {
+        "strawberry-honey-toast": {
+          title: "Strawberry Honey Toast",
+          category: "breakfast",
+          emoji: "🥞",
+          tag: "sweet · simple",
+          intro:
+            "A soft breakfast toast with whipped yogurt, strawberries, and a small drizzle of honey."
+        },
+
+        "yogurt-berry-bowl": {
+          title: "Yogurt Berry Bowl",
+          category: "breakfast",
+          emoji: "🍓",
+          tag: "fruit · soft",
+          intro:
+            "A light yogurt bowl with berries, banana slices, and a small crunchy topping."
+        },
+
+        "fruit-sandwich": {
+          title: "Fruit Sandwich",
+          category: "breakfast",
+          emoji: "🥪",
+          tag: "cute · easy",
+          intro:
+            "A cute milk bread sandwich filled with cream and fresh fruit."
+        },
+
+        "matcha-oat-porridge": {
+          title: "Matcha Oat Porridge",
+          category: "breakfast",
+          emoji: "🍵",
+          tag: "warm · calm",
+          intro:
+            "A warm oat porridge with milk, matcha powder, and a soft green color."
+        },
+
+        "chicken-garden-salad": {
+          title: "Chicken Garden Salad",
+          category: "lunch",
+          emoji: "🥗",
+          tag: "fresh · quick",
+          intro:
+            "A fresh and simple salad with soft chicken slices, greens, and a light dressing."
+        },
+
+        "mini-rice-box": {
+          title: "Mini Rice Box",
+          category: "lunch",
+          emoji: "🍙",
+          tag: "cute · packed",
+          intro:
+            "A small lunch box with rice, omelet, and vegetables arranged neatly."
+        },
+
+        "light-soy-noodles": {
+          title: "Light Soy Noodles",
+          category: "lunch",
+          emoji: "🍜",
+          tag: "warm · easy",
+          intro:
+            "A light noodle soup with soy broth, vegetables, and a soft egg."
+        },
+
+        "avocado-rice-bowl": {
+          title: "Avocado Rice Bowl",
+          category: "lunch",
+          emoji: "🥑",
+          tag: "green · soft",
+          intro:
+            "A simple rice bowl with avocado, vegetables, and light seasoning."
+        },
+
+        "tomato-tofu-soup": {
+          title: "Tomato Tofu Soup",
+          category: "dinner",
+          emoji: "🍲",
+          tag: "warm · comfort",
+          intro:
+            "A light and comforting tomato soup with tofu and soft vegetables."
+        },
+
+        "soft-curry-rice": {
+          title: "Soft Curry Rice",
+          category: "dinner",
+          emoji: "🍛",
+          tag: "one bowl · calm",
+          intro:
+            "A mild curry dish with soft vegetables served over warm rice."
+        },
+
+        "steamed-greens-plate": {
+          title: "Steamed Greens Plate",
+          category: "dinner",
+          emoji: "🥬",
+          tag: "green · simple",
+          intro:
+            "A simple plate of steamed greens with tofu and light dressing."
+        },
+
+        "egg-rice-bowl": {
+          title: "Egg and Rice Bowl",
+          category: "dinner",
+          emoji: "🍚",
+          tag: "soft · homey",
+          intro:
+            "A simple and comforting rice bowl with soft eggs."
+        }
+      };
+
+      function getProductFavorites() {
         return JSON.parse(localStorage.getItem("tinyBitesFavorites")) || [];
       }
 
-      function saveFavorites(favorites) {
+      function saveProductFavorites(favorites) {
         localStorage.setItem("tinyBitesFavorites", JSON.stringify(favorites));
       }
 
-      function removeFavorite(productId) {
-        const updatedFavorites = getFavorites().filter(function (id) {
+      function getRecipeFavorites() {
+        return JSON.parse(localStorage.getItem("tinyBitesRecipeFavorites")) || [];
+      }
+
+      function saveRecipeFavorites(favorites) {
+        localStorage.setItem("tinyBitesRecipeFavorites", JSON.stringify(favorites));
+      }
+
+      function removeProductFavorite(productId) {
+        const updatedFavorites = getProductFavorites().filter(function (id) {
           return id !== productId;
         });
 
-        saveFavorites(updatedFavorites);
+        saveProductFavorites(updatedFavorites);
         renderFavorites();
       }
 
-      function renderFavorites() {
-        const favoriteIds = getFavorites();
-        favoritesGrid.innerHTML = "";
+      function removeRecipeFavorite(recipeId) {
+        const updatedFavorites = getRecipeFavorites().filter(function (id) {
+          return id !== recipeId;
+        });
 
-        if (favoriteIds.length === 0) {
-          emptyState.style.display = "block";
-          return;
-        }
+        saveRecipeFavorites(updatedFavorites);
+        renderFavorites();
+      }
 
-        emptyState.style.display = "none";
+      function renderRecipeFavorites() {
+        const favoriteRecipeIds = getRecipeFavorites();
+        recipeFavoritesGrid.innerHTML = "";
 
-        favoriteIds.forEach(function (id) {
+        favoriteRecipeIds.forEach(function (id) {
+          const recipe = recipes[id];
+
+          if (!recipe) return;
+
+          const card = document.createElement("article");
+          card.className = "favorite-card";
+
+          card.innerHTML = `
+            <div class="favorite-body">
+              <p class="small-label">${recipe.category}</p>
+              <h3>${recipe.emoji} ${recipe.title}</h3>
+              <p>${recipe.intro}</p>
+              <div class="favorite-price">${recipe.tag}</div>
+
+              <div class="favorite-actions">
+                <a href="recipe.html?id=${id}">View recipe</a>
+                <button type="button" data-id="${id}">Remove</button>
+              </div>
+            </div>
+          `;
+
+          recipeFavoritesGrid.appendChild(card);
+        });
+
+        const removeRecipeButtons = recipeFavoritesGrid.querySelectorAll("button");
+
+        removeRecipeButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            const recipeId = button.getAttribute("data-id");
+            removeRecipeFavorite(recipeId);
+          });
+        });
+      }
+
+      function renderProductFavorites() {
+        const favoriteProductIds = getProductFavorites();
+        productFavoritesGrid.innerHTML = "";
+
+        favoriteProductIds.forEach(function (id) {
           const product = products[id];
 
           if (!product) return;
@@ -99,17 +263,31 @@
             </div>
           `;
 
-          favoritesGrid.appendChild(card);
+          productFavoritesGrid.appendChild(card);
         });
 
-        const removeButtons = document.querySelectorAll(".favorite-actions button");
+        const removeProductButtons = productFavoritesGrid.querySelectorAll("button");
 
-        removeButtons.forEach(function (button) {
+        removeProductButtons.forEach(function (button) {
           button.addEventListener("click", function () {
             const productId = button.getAttribute("data-id");
-            removeFavorite(productId);
+            removeProductFavorite(productId);
           });
         });
+      }
+
+      function renderFavorites() {
+        renderRecipeFavorites();
+        renderProductFavorites();
+
+        const recipeFavorites = getRecipeFavorites();
+        const productFavorites = getProductFavorites();
+
+        if (recipeFavorites.length === 0 && productFavorites.length === 0) {
+          emptyState.style.display = "block";
+        } else {
+          emptyState.style.display = "none";
+        }
       }
 
       renderFavorites();
