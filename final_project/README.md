@@ -1,3 +1,4 @@
+documentation
 1. general process
 For my final project, I focused on transforming my midterm website into a more complete and interactive system. In the midterm, my project emphasized visual design and layout. It as a recipe website, it does not have real recipe on it.
 
@@ -43,3 +44,4 @@ Another key takeaway is thinking about user experience beyond visual design. I h
 Instead of organizing recipes only by meal type, I would introduce a mood-based system, where users can explore recipes based on how they feel (e.g., calm, tired, or needing comfort). Also, I want the cart to suggest items based on the recipes the user saved. For example, if a user saves a recipe, the ingredients could be automatically added to the cart.
 
 From a technical perspective, I would replace localStorage with a real backend system so that user data can persist across devices.
+link to demovideo: https://drive.google.com/file/d/1iYcx9VaG4RazlwX97yTfcY_xpz6RHJgm/view?usp=sharing
